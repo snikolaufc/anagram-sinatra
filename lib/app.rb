@@ -9,6 +9,8 @@ class App < Sinatra::Base
   DICTIONARY_PATH = ENV.fetch('DICTIONARY_PATH') { File.expand_path('../data/dictionary.txt', __dir__) }
   AnagramWithDictionary = ::AnagramFinder.new(File.foreach(DICTIONARY_PATH).map(&:chomp))
 
+  set :protection, except: [:json_csrf]
+
   get '/' do
     json error: 'No words have been passed'
   end
